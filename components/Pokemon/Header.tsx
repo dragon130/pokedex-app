@@ -1,10 +1,17 @@
 import { Box, Text } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
 
 import { addLeadingZeros } from "../../helpers/utility";
 import { PokemonInterface } from "../../helpers/interface";
 
 const PokemonHeader = ({ pokemon }: { pokemon: PokemonInterface }) => {
+    const router = useRouter();
+
+    const handleBackButton = () => {
+        router.back();
+    };
+
     return (
         <Box
             display="flex"
@@ -17,7 +24,13 @@ const PokemonHeader = ({ pokemon }: { pokemon: PokemonInterface }) => {
             mb={270}
         >
             <Box display="flex" alignItems="center">
-                <ArrowBackIcon fontSize={30} color="#fff" marginRight="16px" />
+                <ArrowBackIcon
+                    fontSize={30}
+                    color="#fff"
+                    marginRight="16px"
+                    onClick={handleBackButton}
+                    cursor="pointer"
+                />
                 <Text
                     as="b"
                     color="#fff"

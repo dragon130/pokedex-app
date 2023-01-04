@@ -3,43 +3,35 @@ import React, { useState, useEffect } from "react";
 import { Box, Text } from "@chakra-ui/react";
 
 import { usePokemon } from "../../hooks/usePokemon";
-import EvolutionBox from "./EvolutionBox";
+import EvolutionChain from "./EvolutionChain";
 import { PokemonEvoChain } from "../../helpers/interface";
 
 const Evolution = ({ url }: { url: string }) => {
     const [evolution, setEvolution] = useState<PokemonEvoChain>(
         {} as PokemonEvoChain
     );
-    const { fetchPokemonByUrl } = usePokemon();
-
+    const { fetchPokemonEvolution, loading } = usePokemon();
     const handleFetchEvolution = async (url: string) => {
-        const evoChain = (await fetchPokemonByUrl(url)) || {};
+        const evoChain = (await fetchPokemonEvolution(url)) || {};
+
         const { chain } = evoChain;
-        console.log("chain >", chain);
+
         setEvolution(chain);
     };
 
     useEffect(() => {
-        handleFetchEvolution(url);
+        if (url) {
+            handleFetchEvolution(url);
+        }
     }, [url]);
 
+    if (loading) {
+        return null;
+    }
+
     return (
-        <Box display="flex">
-            {evolution?.evolves_to?.length && (
-                <>
-                    {evolution?.evolves_to.map((evo) => {
-                        const splitUrl = evo.species.url.split("/");
-                        const pokemonId = splitUrl[splitUrl.length - 2];
-                        return (
-                            <EvolutionBox
-                                key={pokemonId}
-                                name={evo.species.name}
-                                id={pokemonId}
-                            />
-                        );
-                    })}
-                </>
-            )}
+        <Box display="flex" marginTop={10}>
+            <EvolutionChain evolution={evolution} />
         </Box>
     );
 };

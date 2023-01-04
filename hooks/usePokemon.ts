@@ -56,10 +56,28 @@ export const usePokemon = () => {
         }
     };
 
+    const fetchPokemonEvolution = async (url: string) => {
+        setLoading(true);
+        try {
+            const res = await axios({
+                method: "get",
+                url,
+            });
+
+            setLoading(false);
+
+            return res.data;
+        } catch (err: any) {
+            setError(err);
+            setLoading(false);
+        }
+    };
+
     return {
         fetchPokemonByUrl,
         fetchPokemonByName,
         fetchPokemonSpecies,
+        fetchPokemonEvolution,
         loading,
         error,
     } as const;

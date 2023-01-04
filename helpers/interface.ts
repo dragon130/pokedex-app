@@ -43,9 +43,9 @@ export interface PokemonSpecies {
     };
 }
 
-interface PokemonEvolve {
+export interface PokemonEvolve {
     evolves_to: PokemonEvolve[];
-    isBaby: boolean;
+    is_baby: boolean;
     species: {
         name: string;
         url: string;

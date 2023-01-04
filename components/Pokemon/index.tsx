@@ -177,6 +177,7 @@ const Pokemon = ({
                         </TabPanel>
                         <TabPanel>
                             <PokemonEvolution
+                                name={pokemon?.name}
                                 url={species?.evolution_chain?.url}
                             />
                         </TabPanel>
